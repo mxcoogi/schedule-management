@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.dto.SignupRequestDto;
 import org.example.schedulemanagement.dto.SignupResponseDto;
+import org.example.schedulemanagement.dto.UserResponseDto;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
+    public UserResponseDto findByUser(Long userId) {
+
+        User user = userRepository.findUserByIdOrElseThrow(userId);
+        return new UserResponseDto(user.getId(), user.getName(), user.getEmail(), user.getCreatedAt(), user.getUpdatedAt());
+    }
 
 
 }
