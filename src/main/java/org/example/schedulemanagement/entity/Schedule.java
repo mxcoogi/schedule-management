@@ -1,8 +1,10 @@
 package org.example.schedulemanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 @Table(name = "schedule")
 public class Schedule extends BaseEntity{
 
