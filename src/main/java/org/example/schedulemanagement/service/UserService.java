@@ -2,10 +2,7 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.dto.SignupRequestDto;
-import org.example.schedulemanagement.dto.SignupResponseDto;
-import org.example.schedulemanagement.dto.UpdateRequestDto;
-import org.example.schedulemanagement.dto.UserResponseDto;
+import org.example.schedulemanagement.dto.*;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -36,6 +33,7 @@ public class UserService implements IUserService {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserResponseDto findByUser(Long userId) {
 
@@ -55,6 +53,16 @@ public class UserService implements IUserService {
         User updatedUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
         log.info("name : {}, updateAt : {}", updatedUser.getName(), updatedUser.getUpdatedAt());
         return new UserResponseDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getCreatedAt(), updatedUser.getUpdatedAt());
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(DeleteRequestDto requestDto) {
+        User findUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
+        if (!findUser.getPassword().equals(requestDto.getUserPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        userRepository.delete(findUser);
     }
 
 
