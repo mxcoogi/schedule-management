@@ -16,13 +16,6 @@ public class UserController {
 
     private final IUserService userService;
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<SignupResponseDto> signUp(
-            @RequestBody SignupRequestDto requestDto
-    ) {
-        SignupResponseDto responseDto = userService.signUp(requestDto);
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
-    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> findUser(

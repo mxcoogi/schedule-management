@@ -19,19 +19,6 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
 
-    @Transactional
-    @Override
-    public SignupResponseDto signUp(SignupRequestDto requestDto) {
-
-        Optional<User> findUser = userRepository.findUserByEmail(requestDto.getUserEmail());
-        if(!findUser.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "존재하는 이메일");
-        }
-        User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), requestDto.getUserPassword());
-        User savedUser = userRepository.save(user);
-        return new SignupResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
-
-    }
 
     @Transactional(readOnly = true)
     @Override
