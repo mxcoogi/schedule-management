@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
+import org.example.schedulemanagement.exception.AuthenticationException;
 import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class AuthFilter implements Filter {
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
             if(session == null || session.getAttribute(Const.LOGIN_USER) == null){
-                throw new RuntimeException("로그인 해주세요");
+                throw new AuthenticationException(); //왜 controllerAdvice에서 처리못할/까?
             }
         }
 
