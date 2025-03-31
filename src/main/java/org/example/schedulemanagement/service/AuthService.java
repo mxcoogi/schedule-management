@@ -43,6 +43,15 @@ public class AuthService implements IAuthService{
         return loginUser.getId();
     }
 
+    @Override
+    public void logout(HttpServletRequest httpRequest) {
+        HttpSession session = httpRequest.getSession(false);
+        // 세션이 존재하면 -> 로그인이 된 경우
+        if(session != null) {
+            session.invalidate(); // 해당 세션(데이터)을 삭제한다.
+        }
+    }
+
     private User isValidEmailPassword(LoginRequestDto dto){
         User user = userRepository.findUserByEmailOrElseThrow(dto.getUserEmail());
 //        if(!user.getEmail().equals(dto.getUserEmail())){

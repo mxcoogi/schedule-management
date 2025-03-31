@@ -11,5 +11,5 @@ public interface IAuthService {
 
     SignUpResponseDto signUp(SignUpRequestDto requestDto);
     Long login(LoginRequestDto requestDto, HttpServletRequest request);
-
+    void logout(HttpServletRequest httpRequest);
 }

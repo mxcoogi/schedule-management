@@ -32,10 +32,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Long> login(
             @RequestBody LoginRequestDto requestDto,
-            HttpServletRequest request
+            HttpServletRequest httpRequest
             ){
-        Long userId = authService.login(requestDto, request);
+        Long userId = authService.login(requestDto, httpRequest);
         return new ResponseEntity<>(userId, HttpStatus.OK);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<Void> login(
+            HttpServletRequest httpRequest
+    ){
+        authService.logout(httpRequest);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
