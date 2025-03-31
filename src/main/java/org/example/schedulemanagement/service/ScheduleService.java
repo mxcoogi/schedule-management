@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
+import org.example.schedulemanagement.dto.userdto.DeleteRequestDto;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.ScheduleRepository;
@@ -62,6 +63,17 @@ public class ScheduleService implements IScheduleService{
         Schedule updatedSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
 
         return toScheduleResponseDto(updatedSchedule);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSchedule(Long scheduleId, DeleteRequestDto requestDto) {
+        Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
+        User findUser = findSchedule.getUser();
+        if (!findUser.getEmail().equals(requestDto.getUserEmail()) || !findUser.getPassword().equals(requestDto.getUserPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다");
+        }
+        scheduleRepository.delete(findSchedule);
     }
 
     private ScheduleResponseDto toScheduleResponseDto(Schedule schedule){

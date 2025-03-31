@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
+import org.example.schedulemanagement.dto.userdto.DeleteRequestDto;
 import org.example.schedulemanagement.service.IScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,15 @@ public class ScheduleController {
     ){
         ScheduleResponseDto responseDto = scheduleService.updateSchedule(scheduleId, requestDto);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable Long scheduleId,
+            @RequestBody DeleteRequestDto requestDto
+    ){
+        scheduleService.deleteSchedule(scheduleId, requestDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
