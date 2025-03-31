@@ -47,8 +47,9 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public void deleteUser(DeleteRequestDto requestDto) {
-        User findUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
+    public void deleteUser(DeleteRequestDto requestDto,HttpServletRequest httpServletRequest) {
+        SavedSessionDto savedSessionDto = (SavedSessionDto) httpServletRequest.getSession().getAttribute(Const.LOGIN_USER);
+        User findUser = userRepository.findUserByIdOrElseThrow(savedSessionDto.getUserId());
         if (!findUser.getPassword().equals(requestDto.getUserPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }

@@ -10,6 +10,6 @@ public interface IUserService {
 
     UserResponseDto findUser(Long userId);
     UserResponseDto updateUser(UpdateRequestDto requestDto, HttpServletRequest httpServletRequest);
-    void deleteUser(DeleteRequestDto requestDto);
+    void deleteUser(DeleteRequestDto requestDto,HttpServletRequest httpServletRequest);
 
 }

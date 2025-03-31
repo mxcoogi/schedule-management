@@ -70,11 +70,11 @@ public class ScheduleService implements IScheduleService{
     public void deleteSchedule(Long scheduleId, DeleteRequestDto requestDto) {
         Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
         User findUser = findSchedule.getUser();
-        if (!findUser.getEmail().equals(requestDto.getUserEmail()) || !findUser.getPassword().equals(requestDto.getUserPassword())) {
+        if (!findUser.getPassword().equals(requestDto.getUserPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다");
         }
         scheduleRepository.delete(findSchedule);
-    }
+    } //여기 바꿔야뎀
 
     private ScheduleResponseDto toScheduleResponseDto(Schedule schedule){
         return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents(), schedule.getUser().getName(), schedule.getCreatedAt(), schedule.getUpdatedAt());

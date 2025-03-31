@@ -38,9 +38,10 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(
-            @RequestBody DeleteRequestDto requestDto
+            @RequestBody DeleteRequestDto requestDto,
+            HttpServletRequest httpRequest
     ) {
-        userService.deleteUser(requestDto);
+        userService.deleteUser(requestDto, httpRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
