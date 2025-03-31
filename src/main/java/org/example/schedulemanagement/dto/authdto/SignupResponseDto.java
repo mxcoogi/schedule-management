@@ -1,4 +1,4 @@
-package org.example.schedulemanagement.dto.userdto;
+package org.example.schedulemanagement.dto.authdto;
 
 import lombok.Getter;
 

@@ -3,6 +3,7 @@ package org.example.schedulemanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
+import org.example.schedulemanagement.dto.authdto.SignupResponseDto;
 import org.example.schedulemanagement.service.IAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,10 @@ public class AuthController {
     private final IAuthService authService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Long> signUp(
+    public ResponseEntity<SignupResponseDto> signUp(
             @RequestBody SignUpRequestDto requestDto
     ){
-        Long id = authService.signUp(requestDto);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        SignupResponseDto responseDto = authService.signUp(requestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 }

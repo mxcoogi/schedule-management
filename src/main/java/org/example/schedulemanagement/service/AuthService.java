@@ -2,6 +2,7 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
+import org.example.schedulemanagement.dto.authdto.SignupResponseDto;
 import org.example.schedulemanagement.dto.userdto.SignupRequestDto;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
@@ -20,7 +21,7 @@ public class AuthService implements IAuthService{
 
 
     @Override
-    public Long signUp(SignUpRequestDto requestDto) {
+    public SignupResponseDto signUp(SignUpRequestDto requestDto) {
 
         Optional<User> findUser = userRepository.findUserByEmail(requestDto.getUserEmail());
         if(!findUser.isEmpty()){
@@ -28,7 +29,7 @@ public class AuthService implements IAuthService{
         }
         User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), requestDto.getUserPassword());
         User savedUser = userRepository.save(user);
-        return savedUser.getId();
+        return new SignupResponseDto(savedUser.getId(),savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
     }
 
 
