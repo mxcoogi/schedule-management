@@ -6,12 +6,9 @@ import lombok.Getter;
 public class UpdateRequestDto {
 
     private final String updateUserName;
-    private final String userEmail;
-    private final String userPassword;
 
-    public UpdateRequestDto(String updateUserName, String userEmail, String userPassword) {
+    public UpdateRequestDto(String updateUserName) {
         this.updateUserName = updateUserName;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+
     }
 }

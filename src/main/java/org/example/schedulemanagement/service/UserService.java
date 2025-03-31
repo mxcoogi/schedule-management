@@ -35,11 +35,12 @@ public class UserService implements IUserService {
     @Override
     public UserResponseDto updateUser(UpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
 
+        log.info("update user api 실행");
         SavedSessionDto savedSessionDto = (SavedSessionDto) httpServletRequest.getSession().getAttribute(Const.LOGIN_USER);
         User findUser = userRepository.findUserByIdOrElseThrow(savedSessionDto.getUserId());
         log.info("name : {}, updateAt : {}", findUser.getName(), findUser.getUpdatedAt());
         findUser.updateName(requestDto.getUpdateUserName());
-        User updatedUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
+        User updatedUser = userRepository.findUserByIdOrElseThrow(savedSessionDto.getUserId());
         log.info("name : {}, updateAt : {}", updatedUser.getName(), updatedUser.getUpdatedAt());
         return new UserResponseDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getCreatedAt(), updatedUser.getUpdatedAt());
     }

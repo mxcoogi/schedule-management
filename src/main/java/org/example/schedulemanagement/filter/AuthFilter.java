@@ -24,14 +24,14 @@ public class AuthFilter implements Filter {
         String requestURI = httpRequest.getRequestURI();
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        log.info("로그인 필터 실행");
+        log.info("login filter");
+
 
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
             if(session == null || session.getAttribute(Const.LOGIN_USER) == null){
                 throw new RuntimeException("로그인 해주세요");
             }
-            log.info("로그인에 성공했습니다");
         }
 
         //강의와 다른이유? 강의는 chain이었음
