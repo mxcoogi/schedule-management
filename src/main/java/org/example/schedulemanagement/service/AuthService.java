@@ -1,9 +1,12 @@
 package org.example.schedulemanagement.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.dto.authdto.LoginRequestDto;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
-import org.example.schedulemanagement.dto.authdto.SignupResponseDto;
-import org.example.schedulemanagement.dto.userdto.SignupRequestDto;
+import org.example.schedulemanagement.dto.authdto.SignUpResponseDto;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -21,7 +24,7 @@ public class AuthService implements IAuthService{
 
 
     @Override
-    public SignupResponseDto signUp(SignUpRequestDto requestDto) {
+    public SignUpResponseDto signUp(SignUpRequestDto requestDto) {
 
         Optional<User> findUser = userRepository.findUserByEmail(requestDto.getUserEmail());
         if(!findUser.isEmpty()){
@@ -29,7 +32,26 @@ public class AuthService implements IAuthService{
         }
         User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), requestDto.getUserPassword());
         User savedUser = userRepository.save(user);
-        return new SignupResponseDto(savedUser.getId(),savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
+        return new SignUpResponseDto(savedUser.getId(),savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
+    }
+
+    @Override
+    public Long login(LoginRequestDto requestDto, HttpServletRequest request) {
+        User loginUser = isValidEmailPassword(requestDto);
+        HttpSession session = request.getSession();
+        session.setAttribute(Const.LOGIN_USER, loginUser);
+        return loginUser.getId();
+    }
+
+    private User isValidEmailPassword(LoginRequestDto dto){
+        User user = userRepository.findUserByEmailOrElseThrow(dto.getUserEmail());
+//        if(!user.getEmail().equals(dto.getUserEmail())){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "이메일이 다릅니다");
+//        }
+        if(!user.getPassword().equals(dto.getUserPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 다릅니다");
+        }
+        return user;
     }
 
 
