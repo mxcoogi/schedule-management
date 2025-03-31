@@ -1,7 +1,9 @@
 package org.example.schedulemanagement.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.service.IUserService;
 import org.springframework.http.HttpStatus;
@@ -27,9 +29,10 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserResponseDto> updateUser(
-            @RequestBody UpdateRequestDto requestDto
+            @RequestBody UpdateRequestDto requestDto,
+            HttpServletRequest httpRequest
     ) {
-        UserResponseDto responseDto = userService.updateUser(requestDto);
+        UserResponseDto responseDto = userService.updateUser(requestDto, httpRequest);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 

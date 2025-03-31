@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.authdto.LoginRequestDto;
+import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
 import org.example.schedulemanagement.dto.authdto.SignUpResponseDto;
 import org.example.schedulemanagement.entity.User;
@@ -39,16 +40,15 @@ public class AuthService implements IAuthService{
     public Long login(LoginRequestDto requestDto, HttpServletRequest request) {
         User loginUser = isValidEmailPassword(requestDto);
         HttpSession session = request.getSession();
-        session.setAttribute(Const.LOGIN_USER, loginUser);
+        session.setAttribute(Const.LOGIN_USER, savedSessionDto(loginUser));
         return loginUser.getId();
     }
 
     @Override
     public void logout(HttpServletRequest httpRequest) {
         HttpSession session = httpRequest.getSession(false);
-        // 세션이 존재하면 -> 로그인이 된 경우
         if(session != null) {
-            session.invalidate(); // 해당 세션(데이터)을 삭제한다.
+            session.invalidate();
         }
     }
 
@@ -61,6 +61,10 @@ public class AuthService implements IAuthService{
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 다릅니다");
         }
         return user;
+    }
+
+    private SavedSessionDto savedSessionDto(User user){
+        return new SavedSessionDto(user.getId(), user.getName());
     }
 
 

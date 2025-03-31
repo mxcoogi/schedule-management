@@ -1,7 +1,10 @@
 package org.example.schedulemanagement.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
@@ -30,11 +33,10 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public UserResponseDto updateUser(UpdateRequestDto requestDto) {
-        User findUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
-        if (!findUser.getPassword().equals(requestDto.getUserPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
+    public UserResponseDto updateUser(UpdateRequestDto requestDto, HttpServletRequest httpServletRequest) {
+
+        SavedSessionDto savedSessionDto = (SavedSessionDto) httpServletRequest.getSession().getAttribute(Const.LOGIN_USER);
+        User findUser = userRepository.findUserByIdOrElseThrow(savedSessionDto.getUserId());
         log.info("name : {}, updateAt : {}", findUser.getName(), findUser.getUpdatedAt());
         findUser.updateName(requestDto.getUpdateUserName());
         User updatedUser = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
