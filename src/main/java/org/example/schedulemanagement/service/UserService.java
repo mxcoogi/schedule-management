@@ -35,7 +35,7 @@ public class UserService implements IUserService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserResponseDto findByUser(Long userId) {
+    public UserResponseDto findUser(Long userId) {
 
         User user = userRepository.findUserByIdOrElseThrow(userId);
         return new UserResponseDto(user.getId(), user.getName(), user.getEmail(), user.getCreatedAt(), user.getUpdatedAt());

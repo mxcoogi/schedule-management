@@ -3,15 +3,11 @@ package org.example.schedulemanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
-import org.example.schedulemanagement.dto.scheduledto.CreateResponseDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.service.IScheduleService;
-import org.example.schedulemanagement.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/schedules")
@@ -21,12 +17,20 @@ public class ScheduleController {
     private final IScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<CreateResponseDto> createSchedule(
+    public ResponseEntity<ScheduleResponseDto> createSchedule(
             @RequestBody CreateRequestDto requestDto
             ){
 
-        CreateResponseDto responseDto = scheduleService.createSchedule(requestDto);
+        ScheduleResponseDto responseDto = scheduleService.createSchedule(requestDto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleResponseDto> findSchedule(
+            @PathVariable Long scheduleId
+    ){
+        ScheduleResponseDto schedule = scheduleService.findSchedule(scheduleId);
+        return new ResponseEntity<>(schedule, HttpStatus.OK);
     }
 
 

@@ -2,7 +2,7 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
-import org.example.schedulemanagement.dto.scheduledto.CreateResponseDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.ScheduleRepository;
@@ -19,7 +19,7 @@ public class ScheduleService implements IScheduleService{
     private final UserRepository userRepository;
 
     @Override
-    public CreateResponseDto createSchedule(CreateRequestDto requestDto) {
+    public ScheduleResponseDto createSchedule(CreateRequestDto requestDto) {
 
         User user = userRepository.findUserByEmailOrElseThrow(requestDto.getUserEmail());
         if(!user.getPassword().equals(requestDto.getUserPassword())){
@@ -29,6 +29,13 @@ public class ScheduleService implements IScheduleService{
         schedule.setUser(user);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
-        return new CreateResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents(), user.getName(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
+        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents(), user.getName(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
+    }
+
+    @Override
+    public ScheduleResponseDto findSchedule(Long id) {
+        Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(id);
+
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents(), findSchedule.getUser().getName(), findSchedule.getCreatedAt(), findSchedule.getUpdatedAt());
     }
 }

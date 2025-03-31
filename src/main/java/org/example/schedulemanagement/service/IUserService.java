@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public interface IUserService {
 
     SignupResponseDto signUp(SignupRequestDto requestDto);
-    UserResponseDto findByUser(Long userId);
+    UserResponseDto findUser(Long userId);
     UserResponseDto updateUser(UpdateRequestDto requestDto);
     void deleteUser(DeleteRequestDto requestDto);
 
