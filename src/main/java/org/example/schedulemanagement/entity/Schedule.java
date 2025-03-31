@@ -2,6 +2,7 @@ package org.example.schedulemanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -18,8 +19,16 @@ public class Schedule extends BaseEntity{
     private String contents;
 
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Schedule(){};
+
+    public Schedule(String title, String contents){
+        this.title = title;
+        this.contents = contents;
+    }
 
 }
