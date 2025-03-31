@@ -2,7 +2,7 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.dto.*;
+import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;

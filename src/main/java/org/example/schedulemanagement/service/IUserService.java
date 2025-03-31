@@ -1,7 +1,7 @@
 package org.example.schedulemanagement.service;
 
 
-import org.example.schedulemanagement.dto.*;
+import org.example.schedulemanagement.dto.userdto.*;
 import org.springframework.stereotype.Service;
 
 @Service

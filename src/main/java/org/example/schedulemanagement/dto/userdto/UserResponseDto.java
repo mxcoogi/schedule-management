@@ -1,8 +1,7 @@
-package org.example.schedulemanagement.dto;
+package org.example.schedulemanagement.dto.userdto;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
