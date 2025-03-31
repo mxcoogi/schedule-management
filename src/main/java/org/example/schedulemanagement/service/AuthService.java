@@ -33,14 +33,14 @@ public class AuthService implements IAuthService{
         }
         User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), requestDto.getUserPassword());
         User savedUser = userRepository.save(user);
-        return new SignUpResponseDto(savedUser.getId(),savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
+        return new SignUpResponseDto(savedUser);
     }
 
     @Override
     public Long login(LoginRequestDto requestDto, HttpServletRequest request) {
         User loginUser = isValidEmailPassword(requestDto);
         HttpSession session = request.getSession();
-        session.setAttribute(Const.LOGIN_USER, savedSessionDto(loginUser));
+        session.setAttribute(Const.LOGIN_USER, new SavedSessionDto(loginUser));
         return loginUser.getId();
     }
 
@@ -63,9 +63,6 @@ public class AuthService implements IAuthService{
         return user;
     }
 
-    private SavedSessionDto savedSessionDto(User user){
-        return new SavedSessionDto(user.getId(), user.getName());
-    }
 
 
 }

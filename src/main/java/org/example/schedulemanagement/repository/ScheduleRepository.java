@@ -14,5 +14,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
         return findScheduleById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+
     List<Schedule> findAllScheduleByUserId(Long userId);
 }

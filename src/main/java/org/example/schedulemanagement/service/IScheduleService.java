@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface IScheduleService {
 
-    ScheduleResponseDto createSchedule(CreateRequestDto requestDto);
+    ScheduleResponseDto createSchedule(CreateRequestDto requestDto, Long userId);
     ScheduleResponseDto findSchedule(Long scheduleId);
     List<ScheduleResponseDto> findAllSchedule(Long userId);
-    ScheduleResponseDto updateSchedule(Long scheduleId, UpdateRequestDto requestDto);
-    void deleteSchedule(Long scheduleId, DeleteRequestDto requestDto);
+    ScheduleResponseDto updateSchedule(Long scheduleId, UpdateRequestDto requestDto, Long userId);
+    void deleteSchedule(Long scheduleId, Long userId);
 }

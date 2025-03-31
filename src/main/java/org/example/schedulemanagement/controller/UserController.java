@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.userdto.*;
+import org.example.schedulemanagement.filter.AuthFilter;
 import org.example.schedulemanagement.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,8 @@ public class UserController {
             @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        UserResponseDto responseDto = userService.updateUser(requestDto, httpRequest);
+        Long userId = AuthFilter.getUserId(httpRequest);
+        UserResponseDto responseDto = userService.updateUser(requestDto,userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -41,7 +43,8 @@ public class UserController {
             @RequestBody DeleteRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        userService.deleteUser(requestDto, httpRequest);
+        Long userId = AuthFilter.getUserId(httpRequest);
+        userService.deleteUser(requestDto, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

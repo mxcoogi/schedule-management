@@ -6,13 +6,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
 
 @Slf4j
 public class AuthFilter implements Filter {
-    private static final String[] WHITE_LIST = {"/auth/*"};
+    private static final String[] WHITE_LIST = {"/auth/sign-up", "/auth/login"};
     @Override
     public void doFilter(
             ServletRequest servletRequest,
@@ -23,9 +24,6 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String requestURI = httpRequest.getRequestURI();
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-
-        log.info("login filter");
-
 
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
@@ -40,5 +38,10 @@ public class AuthFilter implements Filter {
 
     private boolean isWhiteList(String requestURI){
         return PatternMatchUtils.simpleMatch(WHITE_LIST, requestURI);
+    }
+
+    public static Long getUserId(HttpServletRequest request){
+        SavedSessionDto savedSessionDto = (SavedSessionDto)request.getSession().getAttribute(Const.LOGIN_USER);
+        return savedSessionDto.getUserId();
     }
 }
