@@ -41,7 +41,7 @@ ___
 
 ### ERD
 
-![](image/schedule-erd.png)
+![](image/schedule-erd2.png)
 
 ### API
 
