@@ -2,11 +2,14 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
+import org.example.schedulemanagement.entity.Comment;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
+import org.example.schedulemanagement.repository.CommentRepository;
 import org.example.schedulemanagement.repository.ScheduleRepository;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,7 @@ public class ScheduleService implements IScheduleService{
 
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public ScheduleResponseDto createSchedule(CreateRequestDto requestDto, Long userId) {
@@ -38,8 +42,9 @@ public class ScheduleService implements IScheduleService{
     @Override
     public ScheduleResponseDto findSchedule(Long scheduleId) {
         Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
-
-        return new ScheduleResponseDto(findSchedule);
+        List<CommentResponseDto> commentList = commentRepository.findAllBySchedule(findSchedule)
+                .stream().map(CommentResponseDto::new).toList();
+        return new ScheduleResponseDto(findSchedule, commentList);
     }
 
     @Override
