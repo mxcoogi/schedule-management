@@ -28,4 +28,16 @@ public class CommentController {
         CommentResponseDto responseDto = commentService.createComment(scheduleId, requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentResponseDto> updateComment(
+            @Positive @PathVariable Long commentId,
+            @Valid @RequestBody CommentRequestDto requestDto,
+            HttpServletRequest httpRequest
+    ){
+        Long userId = HttpGetRequest.getUserId(httpRequest);
+        CommentResponseDto responseDto = commentService.updateComment(requestDto, commentId, userId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+
+    }
 }

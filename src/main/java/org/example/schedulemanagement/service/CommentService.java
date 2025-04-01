@@ -1,6 +1,7 @@
 package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.dto.commentdto.CommentRequestDto;
 import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.entity.Comment;
@@ -9,9 +10,12 @@ import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.CommentRepository;
 import org.example.schedulemanagement.repository.ScheduleRepository;
 import org.example.schedulemanagement.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentService implements ICommentService{
@@ -29,5 +33,18 @@ public class CommentService implements ICommentService{
         comment.setUser(findUser);
         Comment savedComment = commentRepository.save(comment);
         return new CommentResponseDto(savedComment);
+    }
+
+
+    @Transactional
+    @Override
+    public CommentResponseDto updateComment(CommentRequestDto requestDto,Long commentId, Long userId) {
+        Comment findComment = commentRepository.findCommentByIdOrElseThrow(commentId);
+        if(!findComment.getUser().getId().equals(userId)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        findComment.updateContents(requestDto.getContents());
+        Comment updatedComment = commentRepository.findCommentByIdOrElseThrow(commentId);
+        return new CommentResponseDto(updatedComment);
     }
 }
