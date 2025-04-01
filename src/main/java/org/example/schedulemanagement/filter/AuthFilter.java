@@ -7,8 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
-import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
-import org.example.schedulemanagement.dto.errordto.ErrorResponseDto;
 import org.example.schedulemanagement.exception.UnAuthorizedException;
 import org.springframework.util.PatternMatchUtils;
 

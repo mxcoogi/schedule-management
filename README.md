@@ -39,10 +39,10 @@ ____
 
 ___
 
-### ERD
+### ERD & Diagrams
 
 ![](image/schedule-erd2.png)
-
+![](image/db-diagram.png)
 ### API
 
 # API 명세서
