@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.example.schedulemanagement.config.HttpGetRequest;
+import org.example.schedulemanagement.config.AuthConst;
 import org.example.schedulemanagement.dto.commentdto.CommentRequestDto;
 import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.service.ICommentService;
@@ -24,7 +24,7 @@ public class CommentController {
             @Valid @RequestBody CommentRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         CommentResponseDto responseDto = commentService.createComment(scheduleId, requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class CommentController {
             @Valid @RequestBody CommentRequestDto requestDto,
             HttpServletRequest httpRequest
     ){
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         CommentResponseDto responseDto = commentService.updateComment(requestDto, commentId, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
@@ -46,7 +46,7 @@ public class CommentController {
             @Positive @PathVariable Long commentId,
             HttpServletRequest httpRequest
     ){
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         commentService.deleteComment(commentId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

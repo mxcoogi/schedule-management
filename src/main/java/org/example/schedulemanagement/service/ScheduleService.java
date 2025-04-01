@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleAllResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
-import org.example.schedulemanagement.entity.Comment;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.repository.CommentRepository;
 import org.example.schedulemanagement.repository.ScheduleRepository;
 import org.example.schedulemanagement.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,11 +50,12 @@ public class ScheduleService implements IScheduleService{
         return new ScheduleResponseDto(findSchedule, commentList);
     }
 
+
     @Override
-    public List<ScheduleResponseDto> findAllSchedule(Long userId) {
-        User user = userRepository.findUserByIdOrElseThrow(userId);
-        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByUserId(user.getId());
-        return scheduleList.stream().map(ScheduleResponseDto::new).toList();
+    public ScheduleAllResponseDto findAllSchedulePaging(int page){
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Schedule> pageList = scheduleRepository.findAll(pageable);
+        return new ScheduleAllResponseDto(pageList);
     }
 
     @Transactional
@@ -78,9 +82,6 @@ public class ScheduleService implements IScheduleService{
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 게시글이 아닙니다");
         }
         scheduleRepository.delete(findSchedule);
-    } //여기 바꿔야뎀
-
-
-
+    }
 
 }

@@ -3,7 +3,7 @@ package org.example.schedulemanagement.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.config.AuthConst;
 import org.example.schedulemanagement.config.PasswordEncoder;
 import org.example.schedulemanagement.dto.authdto.LoginRequestDto;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
@@ -43,7 +43,7 @@ public class AuthService implements IAuthService{
     public Long login(LoginRequestDto requestDto, HttpServletRequest request) {
         User loginUser = isValidEmailPassword(requestDto);
         HttpSession session = request.getSession();
-        session.setAttribute(Const.LOGIN_USER, new SavedSessionDto(loginUser));
+        session.setAttribute(AuthConst.LOGIN_USER, new SavedSessionDto(loginUser));
         return loginUser.getId();
     }
 

@@ -5,9 +5,10 @@ import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HttpGetRequest {
+public abstract class AuthConst {
+    public static String LOGIN_USER = "loginUser";
     public static Long getUserId(HttpServletRequest request){
-        SavedSessionDto savedSessionDto = (SavedSessionDto)request.getSession().getAttribute(Const.LOGIN_USER);
+        SavedSessionDto savedSessionDto = (SavedSessionDto)request.getSession().getAttribute(LOGIN_USER);
         return savedSessionDto.getUserId();
     }
 }

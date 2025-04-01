@@ -5,17 +5,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.example.schedulemanagement.config.HttpGetRequest;
+import org.example.schedulemanagement.config.AuthConst;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleAllResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
-import org.example.schedulemanagement.filter.AuthFilter;
 import org.example.schedulemanagement.service.IScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/schedules")
@@ -29,7 +27,7 @@ public class ScheduleController {
             @Valid @RequestBody CreateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId= HttpGetRequest.getUserId(httpRequest);
+        Long userId= AuthConst.getUserId(httpRequest);
         ScheduleResponseDto responseDto = scheduleService.createSchedule(requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
@@ -42,12 +40,20 @@ public class ScheduleController {
         return new ResponseEntity<>(schedule, HttpStatus.OK);
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(
-            HttpServletRequest httpRequest
-    ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
-        List<ScheduleResponseDto> responseDtoList = scheduleService.findAllSchedule(userId);
+//    @GetMapping()
+//    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(
+//            HttpServletRequest httpRequest
+//    ) {
+//        Long userId = HttpGetRequest.getUserId(httpRequest);
+//        List<ScheduleResponseDto> responseDtoList = scheduleService.findAllSchedule(userId);
+//        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
+//    }
+
+    @GetMapping
+    public ResponseEntity<ScheduleAllResponseDto> findAllSchedule(
+            @RequestParam(value = "page", defaultValue = "1") int page
+    ){
+        ScheduleAllResponseDto responseDtoList = scheduleService.findAllSchedulePaging(page-1);
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 
@@ -57,7 +63,7 @@ public class ScheduleController {
             @Valid @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         ScheduleResponseDto responseDto = scheduleService.updateSchedule(scheduleId, requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -67,7 +73,7 @@ public class ScheduleController {
             @Positive @PathVariable Long scheduleId,
             HttpServletRequest httpRequest
     ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         scheduleService.deleteSchedule(scheduleId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

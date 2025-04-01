@@ -1,12 +1,11 @@
 package org.example.schedulemanagement.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.config.AuthConst;
 import org.example.schedulemanagement.exception.UnAuthorizedException;
 import org.springframework.util.PatternMatchUtils;
 
@@ -28,12 +27,10 @@ public class AuthFilter implements Filter {
 
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
-            if(session == null || session.getAttribute(Const.LOGIN_USER) == null){
-                throw new UnAuthorizedException();
+            if(session == null || session.getAttribute(AuthConst.LOGIN_USER) == null){
+                throw new UnAuthorizedException(); //에러처리 조금 더 고민해보기
             }
         }
-
-        //강의와 다른이유? 강의는 chain이었음
         filterChain.doFilter(httpRequest, httpResponse);
     }
 

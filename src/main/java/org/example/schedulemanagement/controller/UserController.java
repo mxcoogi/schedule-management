@@ -5,10 +5,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.config.Const;
-import org.example.schedulemanagement.config.HttpGetRequest;
+import org.example.schedulemanagement.config.AuthConst;
 import org.example.schedulemanagement.dto.userdto.*;
-import org.example.schedulemanagement.filter.AuthFilter;
 import org.example.schedulemanagement.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,7 @@ public class UserController {
             @Valid @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         UserResponseDto responseDto = userService.updateUser(requestDto,userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -46,7 +44,7 @@ public class UserController {
             @Valid @RequestBody DeleteRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = HttpGetRequest.getUserId(httpRequest);
+        Long userId = AuthConst.getUserId(httpRequest);
         userService.deleteUser(requestDto, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
