@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.errordto.ErrorResponseDto;
+import org.example.schedulemanagement.exception.UnAuthorizedException;
 import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class AuthFilter implements Filter {
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
             if(session == null || session.getAttribute(Const.LOGIN_USER) == null){
-                throw new RuntimeException();
+                throw new UnAuthorizedException();
             }
         }
 
