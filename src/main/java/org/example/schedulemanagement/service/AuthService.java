@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.config.PasswordEncoder;
 import org.example.schedulemanagement.dto.authdto.LoginRequestDto;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class AuthService implements IAuthService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -31,7 +33,8 @@ public class AuthService implements IAuthService{
         if(!findUser.isEmpty()){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "존재하는 이메일");
         }
-        User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), requestDto.getUserPassword());
+        String encodedPassword = passwordEncoder.encode(requestDto.getUserPassword());
+        User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), encodedPassword);
         User savedUser = userRepository.save(user);
         return new SignUpResponseDto(savedUser);
     }
@@ -57,7 +60,8 @@ public class AuthService implements IAuthService{
 //        if(!user.getEmail().equals(dto.getUserEmail())){
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "이메일이 다릅니다");
 //        }
-        if(!user.getPassword().equals(dto.getUserPassword())){
+        String rawPassword = dto.getUserPassword();
+        if(!passwordEncoder.matchPassword(rawPassword, user.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 다릅니다");
         }
         return user;
