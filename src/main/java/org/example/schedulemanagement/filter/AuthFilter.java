@@ -1,5 +1,6 @@
 package org.example.schedulemanagement.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -7,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
-import org.example.schedulemanagement.exception.AuthenticationException;
+import org.example.schedulemanagement.dto.errordto.ErrorResponseDto;
 import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class AuthFilter implements Filter {
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
             if(session == null || session.getAttribute(Const.LOGIN_USER) == null){
-                throw new AuthenticationException(); //왜 controllerAdvice에서 처리못할/까?
+                throw new RuntimeException();
             }
         }
 
@@ -41,8 +42,6 @@ public class AuthFilter implements Filter {
         return PatternMatchUtils.simpleMatch(WHITE_LIST, requestURI);
     }
 
-    public static Long getUserId(HttpServletRequest request){
-        SavedSessionDto savedSessionDto = (SavedSessionDto)request.getSession().getAttribute(Const.LOGIN_USER);
-        return savedSessionDto.getUserId();
-    }
 }
+
+

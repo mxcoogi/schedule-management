@@ -3,10 +3,10 @@ package org.example.schedulemanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.example.schedulemanagement.config.HttpGetRequest;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
-import org.example.schedulemanagement.dto.userdto.DeleteRequestDto;
 import org.example.schedulemanagement.filter.AuthFilter;
 import org.example.schedulemanagement.service.IScheduleService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class ScheduleController {
             @RequestBody CreateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId= AuthFilter.getUserId(httpRequest);
+        Long userId= HttpGetRequest.getUserId(httpRequest);
         ScheduleResponseDto responseDto = scheduleService.createSchedule(requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class ScheduleController {
     public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(
             HttpServletRequest httpRequest
     ) {
-        Long userId = AuthFilter.getUserId(httpRequest);
+        Long userId = HttpGetRequest.getUserId(httpRequest);
         List<ScheduleResponseDto> responseDtoList = scheduleService.findAllSchedule(userId);
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
@@ -55,7 +55,7 @@ public class ScheduleController {
             @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = AuthFilter.getUserId(httpRequest);
+        Long userId = HttpGetRequest.getUserId(httpRequest);
         ScheduleResponseDto responseDto = scheduleService.updateSchedule(scheduleId, requestDto, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -65,7 +65,7 @@ public class ScheduleController {
             @PathVariable Long scheduleId,
             HttpServletRequest httpRequest
     ) {
-        Long userId = AuthFilter.getUserId(httpRequest);
+        Long userId = HttpGetRequest.getUserId(httpRequest);
         scheduleService.deleteSchedule(scheduleId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

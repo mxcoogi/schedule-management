@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
+import org.example.schedulemanagement.config.HttpGetRequest;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.filter.AuthFilter;
 import org.example.schedulemanagement.service.IUserService;
@@ -33,7 +34,7 @@ public class UserController {
             @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = AuthFilter.getUserId(httpRequest);
+        Long userId = HttpGetRequest.getUserId(httpRequest);
         UserResponseDto responseDto = userService.updateUser(requestDto,userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -43,7 +44,7 @@ public class UserController {
             @RequestBody DeleteRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
-        Long userId = AuthFilter.getUserId(httpRequest);
+        Long userId = HttpGetRequest.getUserId(httpRequest);
         userService.deleteUser(requestDto, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
