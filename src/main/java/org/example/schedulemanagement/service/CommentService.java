@@ -47,4 +47,13 @@ public class CommentService implements ICommentService{
         Comment updatedComment = commentRepository.findCommentByIdOrElseThrow(commentId);
         return new CommentResponseDto(updatedComment);
     }
+
+    @Override
+    public void deleteComment(Long commentId, Long userId) {
+        Comment findComment = commentRepository.findCommentByIdOrElseThrow(commentId);
+        if(!findComment.getUser().getId().equals(userId)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        commentRepository.delete(findComment);
+    }
 }
