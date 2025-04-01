@@ -1,6 +1,8 @@
 package org.example.schedulemanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.config.Const;
@@ -23,7 +25,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> findUser(
-            @PathVariable Long userId
+            @Positive @PathVariable Long userId
     ) {
         UserResponseDto responseDto = userService.findUser(userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
@@ -31,7 +33,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserResponseDto> updateUser(
-            @RequestBody UpdateRequestDto requestDto,
+            @Valid @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId = HttpGetRequest.getUserId(httpRequest);
@@ -41,7 +43,7 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(
-            @RequestBody DeleteRequestDto requestDto,
+            @Valid @RequestBody DeleteRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId = HttpGetRequest.getUserId(httpRequest);

@@ -2,6 +2,8 @@ package org.example.schedulemanagement.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.schedulemanagement.config.HttpGetRequest;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
@@ -24,7 +26,7 @@ public class ScheduleController {
 
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(
-            @RequestBody CreateRequestDto requestDto,
+            @Valid @RequestBody CreateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId= HttpGetRequest.getUserId(httpRequest);
@@ -34,7 +36,7 @@ public class ScheduleController {
 
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> findSchedule(
-            @PathVariable Long scheduleId
+            @Positive @PathVariable Long scheduleId
     ) {
         ScheduleResponseDto schedule = scheduleService.findSchedule(scheduleId);
         return new ResponseEntity<>(schedule, HttpStatus.OK);
@@ -51,8 +53,8 @@ public class ScheduleController {
 
     @PutMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
-            @PathVariable Long scheduleId,
-            @RequestBody UpdateRequestDto requestDto,
+            @Positive @PathVariable Long scheduleId,
+            @Valid @RequestBody UpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId = HttpGetRequest.getUserId(httpRequest);
@@ -62,7 +64,7 @@ public class ScheduleController {
 
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<Void> deleteSchedule(
-            @PathVariable Long scheduleId,
+            @Positive @PathVariable Long scheduleId,
             HttpServletRequest httpRequest
     ) {
         Long userId = HttpGetRequest.getUserId(httpRequest);
