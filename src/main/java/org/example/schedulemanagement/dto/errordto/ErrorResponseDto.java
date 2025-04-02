@@ -11,7 +11,7 @@ public class ErrorResponseDto {
 
     private String errorMessage;
     private HttpStatus httpStatus;
-    private String errorCode;
+    private int errorCode;
 
     public ErrorResponseDto(MyException mx){
         this.errorMessage = mx.getMessage();

@@ -2,8 +2,11 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.schedulemanagement.config.PasswordEncoder;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.entity.User;
+import org.example.schedulemanagement.global.ErrorCode;
+import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Transactional(readOnly = true)
@@ -44,8 +48,8 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(DeleteRequestDto requestDto, Long userId) {
         User findUser = userRepository.findUserByIdOrElseThrow(userId);
-        if (!findUser.getPassword().equals(requestDto.getUserPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        if (!passwordEncoder.matchPassword(requestDto.getUserPassword(), findUser.getPassword())) {
+            throw new CustomeException(ErrorCode.FORBIDDEN);
         }
         userRepository.delete(findUser);
     }

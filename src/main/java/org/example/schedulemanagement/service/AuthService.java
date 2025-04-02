@@ -10,6 +10,8 @@ import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
 import org.example.schedulemanagement.dto.authdto.SignUpResponseDto;
 import org.example.schedulemanagement.entity.User;
+import org.example.schedulemanagement.global.ErrorCode;
+import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class AuthService implements IAuthService{
 
         Optional<User> findUser = userRepository.findUserByEmail(requestDto.getUserEmail());
         if(!findUser.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "존재하는 이메일");
+            throw new CustomeException(ErrorCode.DUPLICATE_EMAIL);
         }
         String encodedPassword = passwordEncoder.encode(requestDto.getUserPassword());
         User user = new User(requestDto.getUserName(), requestDto.getUserEmail(), encodedPassword);
@@ -62,7 +64,7 @@ public class AuthService implements IAuthService{
 //        }
         String rawPassword = dto.getUserPassword();
         if(!passwordEncoder.matchPassword(rawPassword, user.getPassword())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 다릅니다");
+            throw new CustomeException(ErrorCode.INVALID_CREDENTIALS);
         }
         return user;
     }

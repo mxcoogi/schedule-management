@@ -7,6 +7,8 @@ import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.entity.Comment;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
+import org.example.schedulemanagement.global.ErrorCode;
+import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.CommentRepository;
 import org.example.schedulemanagement.repository.ScheduleRepository;
 import org.example.schedulemanagement.repository.UserRepository;
@@ -41,7 +43,7 @@ public class CommentService implements ICommentService{
     public CommentResponseDto updateComment(CommentRequestDto requestDto,Long commentId, Long userId) {
         Comment findComment = commentRepository.findCommentByIdOrElseThrow(commentId);
         if(!findComment.getUser().getId().equals(userId)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new CustomeException(ErrorCode.FORBIDDEN);
         }
         findComment.updateContents(requestDto.getContents());
         Comment updatedComment = commentRepository.findCommentByIdOrElseThrow(commentId);
@@ -52,7 +54,7 @@ public class CommentService implements ICommentService{
     public void deleteComment(Long commentId, Long userId) {
         Comment findComment = commentRepository.findCommentByIdOrElseThrow(commentId);
         if(!findComment.getUser().getId().equals(userId)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new CustomeException(ErrorCode.FORBIDDEN);
         }
         commentRepository.delete(findComment);
     }

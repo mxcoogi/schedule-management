@@ -9,6 +9,8 @@ import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
+import org.example.schedulemanagement.global.ErrorCode;
+import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.CommentRepository;
 import org.example.schedulemanagement.repository.ScheduleRepository;
 import org.example.schedulemanagement.repository.UserRepository;
@@ -65,7 +67,7 @@ public class ScheduleService implements IScheduleService{
         User findUser = findSchedule.getUser();
         if (!findUser.getId().equals(userId)) {
             log.info("{} {}", findUser.getId(), userId);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 게시물이 아닙니다.");
+            throw new CustomeException(ErrorCode.FORBIDDEN);
         }
         findSchedule.updateSchedule(requestDto.getUpdateScheduleTitle(), requestDto.getUpdateScheduleContents());
         Schedule updatedSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
@@ -79,7 +81,7 @@ public class ScheduleService implements IScheduleService{
         Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
         User findUser = findSchedule.getUser();
         if (!findUser.getId().equals(userId)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인 게시글이 아닙니다");
+            throw new CustomeException(ErrorCode.FORBIDDEN);
         }
         scheduleRepository.delete(findSchedule);
     }
