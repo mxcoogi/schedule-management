@@ -17,6 +17,7 @@ import org.example.schedulemanagement.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +56,7 @@ public class ScheduleService implements IScheduleService{
 
     @Override
     public ScheduleAllResponseDto findAllSchedulePaging(int page, int limit){
-        Pageable pageable = PageRequest.of(page, limit);
+        Pageable pageable = PageRequest.of(page, limit,Sort.by(Sort.Direction.DESC, "updatedAt"));
         Page<Schedule> pageList = scheduleRepository.findAll(pageable);
         return new ScheduleAllResponseDto(pageList);
     }
