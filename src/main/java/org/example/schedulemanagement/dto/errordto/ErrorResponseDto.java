@@ -2,10 +2,10 @@ package org.example.schedulemanagement.dto.errordto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.schedulemanagement.global.ErrorCode;
 import org.example.schedulemanagement.global.exception.MyException;
 import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
 @Getter
 public class ErrorResponseDto {
 
@@ -17,6 +17,13 @@ public class ErrorResponseDto {
         this.errorMessage = mx.getMessage();
         this.httpStatus = mx.getHttpStatus();
         this.errorCode = mx.getCode();
+    }
+    public ErrorResponseDto(String errorMessage, HttpStatus status, int errorCode){
+
+        this.errorMessage = errorMessage;
+        this.httpStatus = status;
+        this.errorCode = errorCode;
+
     }
 
 }
