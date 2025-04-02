@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.schedulemanagement.dto.errordto.ErrorResponseDto;
 import org.example.schedulemanagement.global.ErrorCode;
 import org.example.schedulemanagement.global.exception.CustomeException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

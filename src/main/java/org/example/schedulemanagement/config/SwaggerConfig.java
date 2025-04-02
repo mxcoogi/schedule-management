@@ -18,7 +18,6 @@ public class SwaggerConfig {
                         "내일배움캠프 스프링 숙련과제 일정관리 앱 Develop\n")
                 .contact(new io.swagger.v3.oas.models.info.Contact().email("mxcoogi@gmail.com"));
 
-
         return new OpenAPI()
                 .addServersItem(new Server().url("http://localhost:8080"))  // 추가적인 서버 URL 설정 가능
                 .info(info);

@@ -1,4 +1,4 @@
-package org.example.schedulemanagement.config;
+package org.example.schedulemanagement.global;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;

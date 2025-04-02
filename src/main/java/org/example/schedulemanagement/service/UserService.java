@@ -2,16 +2,14 @@ package org.example.schedulemanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.config.PasswordEncoder;
+import org.example.schedulemanagement.global.PasswordEncoder;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.global.ErrorCode;
 import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @Slf4j

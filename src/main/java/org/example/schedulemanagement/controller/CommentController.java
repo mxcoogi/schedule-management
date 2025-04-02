@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.example.schedulemanagement.config.AuthConst;
+import org.example.schedulemanagement.global.AuthConst;
 import org.example.schedulemanagement.dto.commentdto.CommentRequestDto;
 import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.service.ICommentService;

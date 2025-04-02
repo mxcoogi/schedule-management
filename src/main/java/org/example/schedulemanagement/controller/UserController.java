@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.schedulemanagement.config.AuthConst;
+import org.example.schedulemanagement.global.AuthConst;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.service.IUserService;
 import org.springframework.http.HttpStatus;

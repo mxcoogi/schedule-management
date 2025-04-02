@@ -3,8 +3,8 @@ package org.example.schedulemanagement.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.schedulemanagement.config.AuthConst;
-import org.example.schedulemanagement.config.PasswordEncoder;
+import org.example.schedulemanagement.global.AuthConst;
+import org.example.schedulemanagement.global.PasswordEncoder;
 import org.example.schedulemanagement.dto.authdto.LoginRequestDto;
 import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.dto.authdto.SignUpRequestDto;
@@ -13,9 +13,7 @@ import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.global.ErrorCode;
 import org.example.schedulemanagement.global.exception.CustomeException;
 import org.example.schedulemanagement.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
