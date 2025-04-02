@@ -52,8 +52,8 @@ public class ScheduleService implements IScheduleService{
 
 
     @Override
-    public ScheduleAllResponseDto findAllSchedulePaging(int page){
-        Pageable pageable = PageRequest.of(page, 10);
+    public ScheduleAllResponseDto findAllSchedulePaging(int page, int limit){
+        Pageable pageable = PageRequest.of(page, limit);
         Page<Schedule> pageList = scheduleRepository.findAll(pageable);
         return new ScheduleAllResponseDto(pageList);
     }

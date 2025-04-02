@@ -21,13 +21,13 @@ public class WebConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
-    @Bean
-    public FilterRegistrationBean exceptionFilter(){
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new ExceptionFilter());
-        filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/*");
-        return filterRegistrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean exceptionFilter(){
+//        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+//        filterRegistrationBean.setFilter(new ExceptionFilter());
+//        filterRegistrationBean.setOrder(1);
+//        filterRegistrationBean.addUrlPatterns("/*");
+//        return filterRegistrationBean;
+//    }
 
 }

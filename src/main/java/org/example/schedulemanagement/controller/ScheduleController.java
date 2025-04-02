@@ -51,9 +51,10 @@ public class ScheduleController {
 
     @GetMapping
     public ResponseEntity<ScheduleAllResponseDto> findAllSchedule(
-            @RequestParam(value = "page", defaultValue = "1") int page
+            @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+            @Positive @RequestParam(value = "limit", defaultValue = "10") int limit
     ){
-        ScheduleAllResponseDto responseDtoList = scheduleService.findAllSchedulePaging(page-1);
+        ScheduleAllResponseDto responseDtoList = scheduleService.findAllSchedulePaging(page-1, limit);
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 

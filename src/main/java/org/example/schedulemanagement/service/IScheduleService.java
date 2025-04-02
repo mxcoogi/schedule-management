@@ -12,7 +12,7 @@ public interface IScheduleService {
 
     ScheduleResponseDto createSchedule(CreateRequestDto requestDto, Long userId);
     ScheduleResponseDto findSchedule(Long scheduleId);
-    ScheduleAllResponseDto findAllSchedulePaging(int page);
+    ScheduleAllResponseDto findAllSchedulePaging(int page, int limit);
     ScheduleResponseDto updateSchedule(Long scheduleId, UpdateRequestDto requestDto, Long userId);
     void deleteSchedule(Long scheduleId, Long userId);
 
