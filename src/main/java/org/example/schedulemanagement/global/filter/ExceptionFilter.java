@@ -1,8 +1,8 @@
-package org.example.schedulemanagement.filter;
+package org.example.schedulemanagement.global.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.schedulemanagement.exception.MyException;
+import org.example.schedulemanagement.global.exception.MyException;
 
 import java.io.IOException;
 
