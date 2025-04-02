@@ -40,11 +40,15 @@ public class CommentService implements ICommentService{
 
     @Transactional
     @Override
-    public CommentResponseDto updateComment(CommentRequestDto requestDto,Long commentId, Long userId) {
+    public CommentResponseDto updateComment(CommentRequestDto requestDto,Long scheduleId ,Long commentId, Long userId) {
         Comment findComment = commentRepository.findCommentByIdOrElseThrow(commentId);
+        if(!findComment.getSchedule().getId().equals(scheduleId)){
+            throw new CustomeException(ErrorCode.RESOURCE_NOT_FOUND); //
+        }
         if(!findComment.getUser().getId().equals(userId)){
             throw new CustomeException(ErrorCode.FORBIDDEN);
         }
+
         findComment.updateContents(requestDto.getContents());
         Comment updatedComment = commentRepository.findCommentByIdOrElseThrow(commentId);
         return new CommentResponseDto(updatedComment);

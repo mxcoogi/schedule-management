@@ -31,12 +31,13 @@ public class CommentController {
 
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentResponseDto> updateComment(
+            @Positive @PathVariable Long scheduleId,
             @Positive @PathVariable Long commentId,
             @Valid @RequestBody CommentRequestDto requestDto,
             HttpServletRequest httpRequest
     ){
         Long userId = AuthConst.getUserId(httpRequest);
-        CommentResponseDto responseDto = commentService.updateComment(requestDto, commentId, userId);
+        CommentResponseDto responseDto = commentService.updateComment(requestDto,scheduleId, commentId, userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
 
     }
