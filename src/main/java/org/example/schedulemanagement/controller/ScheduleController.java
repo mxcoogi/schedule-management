@@ -11,7 +11,7 @@ import org.example.schedulemanagement.global.AuthConst;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleAllResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
-import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleUpdateRequestDto;
 import org.example.schedulemanagement.service.IScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -148,7 +148,7 @@ public class ScheduleController {
     @PutMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
             @Positive @PathVariable Long scheduleId,
-            @Valid @RequestBody UpdateRequestDto requestDto,
+            @Valid @RequestBody ScheduleUpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId = AuthConst.getUserId(httpRequest);

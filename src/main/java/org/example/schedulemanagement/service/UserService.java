@@ -31,7 +31,7 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public UserResponseDto updateUser(UpdateRequestDto requestDto, Long userId) {
+    public UserResponseDto updateUser(UserUpdateRequestDto requestDto, Long userId) {
 
         log.info("update user api 실행");
         User findUser = userRepository.findUserByIdOrElseThrow(userId);

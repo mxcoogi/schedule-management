@@ -6,7 +6,7 @@ import org.example.schedulemanagement.dto.commentdto.CommentResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.CreateRequestDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleAllResponseDto;
 import org.example.schedulemanagement.dto.scheduledto.ScheduleResponseDto;
-import org.example.schedulemanagement.dto.scheduledto.UpdateRequestDto;
+import org.example.schedulemanagement.dto.scheduledto.ScheduleUpdateRequestDto;
 import org.example.schedulemanagement.entity.Schedule;
 import org.example.schedulemanagement.entity.User;
 import org.example.schedulemanagement.global.ErrorCode;
@@ -36,8 +36,7 @@ public class ScheduleService implements IScheduleService{
     public ScheduleResponseDto createSchedule(CreateRequestDto requestDto, Long userId) {
 
         User user = userRepository.findUserByIdOrElseThrow(userId);
-        Schedule schedule = new Schedule(requestDto.getScheduleTitle(), requestDto.getScheduleContents());
-        schedule.setUser(user);
+        Schedule schedule = new Schedule(requestDto.getScheduleTitle(), requestDto.getScheduleContents(), user);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new ScheduleResponseDto(savedSchedule);
@@ -61,7 +60,7 @@ public class ScheduleService implements IScheduleService{
 
     @Transactional
     @Override
-    public ScheduleResponseDto updateSchedule(Long scheduleId, UpdateRequestDto requestDto, Long userId) {
+    public ScheduleResponseDto updateSchedule(Long scheduleId, ScheduleUpdateRequestDto requestDto, Long userId) {
         Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
         User findUser = findSchedule.getUser();
         if (!findUser.getId().equals(userId)) {

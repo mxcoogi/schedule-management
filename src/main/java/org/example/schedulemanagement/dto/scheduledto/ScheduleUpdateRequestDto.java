@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-public class UpdateRequestDto {
+public class ScheduleUpdateRequestDto {
 
 
     @NotBlank
@@ -15,7 +15,7 @@ public class UpdateRequestDto {
     @Length(max = 200)
     private final String updateScheduleContents;
 
-    public UpdateRequestDto(String updateScheduleTitle, String updateScheduleContents) {
+    public ScheduleUpdateRequestDto(String updateScheduleTitle, String updateScheduleContents) {
         this.updateScheduleTitle = updateScheduleTitle;
         this.updateScheduleContents = updateScheduleContents;
     }

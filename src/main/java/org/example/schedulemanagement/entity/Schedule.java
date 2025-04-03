@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "schedule")
@@ -19,20 +22,25 @@ public class Schedule extends BaseEntity{
     private String contents;
 
 
-    @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "schedule" , cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
+
+
     public Schedule(){};
 
-    public Schedule(String title, String contents){
+    public Schedule(String title, String contents, User user){
         this.title = title;
         this.contents = contents;
+        this.user = user;
     }
     public void updateSchedule(String updateScheduleTitle, String updateScheduleContents){
         this.title = updateScheduleTitle;
         this.contents = updateScheduleContents;
+
     }
 
 }

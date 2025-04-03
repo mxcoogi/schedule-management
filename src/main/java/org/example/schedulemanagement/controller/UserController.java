@@ -73,7 +73,7 @@ public class UserController {
     )
     @PutMapping
     public ResponseEntity<UserResponseDto> updateUser(
-            @Valid @RequestBody UpdateRequestDto requestDto,
+            @Valid @RequestBody UserUpdateRequestDto requestDto,
             HttpServletRequest httpRequest
     ) {
         Long userId = AuthConst.getUserId(httpRequest);
