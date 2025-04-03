@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Slf4j
 public class AuthFilter implements Filter {
-    private static final String[] WHITE_LIST = {"/auth/sign-up", "/auth/login",  "/swagger-ui/index.html"};
+    private static final String[] WHITE_LIST = {"/auth/sign-up", "/auth/login",  "/swagger-ui/*","/v3/api-docs/*", "/v3/api-docs"};
 
     @Override
     public void doFilter(
@@ -31,6 +31,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         if (!isWhiteList(requestURI)) {
+            log.info(requestURI);
             try {
                 HttpSession session = httpRequest.getSession(false);
                 if (session == null || session.getAttribute(AuthConst.LOGIN_USER) == null) {
@@ -38,6 +39,7 @@ public class AuthFilter implements Filter {
                 }
             } catch (MyException e) {
                 sendErrorResponse(httpResponse, e);
+                return;
             }
         }
         filterChain.doFilter(httpRequest, httpResponse);

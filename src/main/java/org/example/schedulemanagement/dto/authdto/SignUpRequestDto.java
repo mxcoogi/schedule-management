@@ -15,7 +15,6 @@ public class SignUpRequestDto {
     private final String userName;
 
     @Email
-    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식이 올바르지 않습니다.")
     private final String userEmail;
 
     @NotBlank

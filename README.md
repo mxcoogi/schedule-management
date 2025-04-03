@@ -14,7 +14,7 @@ ___
 ### 기술 스택
 
 - Java 17
-- Spring MVC 3.4.4
+- Spring MVC 3.3.6
 - JPA
 - MySQL Community Server 9.2.0
 
