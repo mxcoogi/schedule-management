@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Slf4j
 public class AuthFilter implements Filter {
-    private static final String[] WHITE_LIST = {"/auth/sign-up", "/auth/login",  "/swagger-ui/*","/v3/api-docs/*", "/v3/api-docs"};
+    private static final String[] WHITE_LIST = {"/auth/sign-up", "/auth/login",  "/swagger-ui/*","/v3/api-docs/*", "/v3/api-docs", "/test"};
 
     @Override
     public void doFilter(
