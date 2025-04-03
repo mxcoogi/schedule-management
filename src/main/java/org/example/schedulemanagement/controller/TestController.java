@@ -30,6 +30,6 @@ public class TestController {
     )
     @GetMapping
     public String test(){
-        return "{'message' : 'test' }";
+        return "{\"message\" : \"test\" }";
     }
 }
