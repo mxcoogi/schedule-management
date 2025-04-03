@@ -46,4 +46,4 @@ ___
 ### API
 
 # API 명세서
-[swagger-docs]("https://mxcoogi.github.io/schedule-swagger-ui/")
+[swagger-docs](https://mxcoogi.github.io/schedule-swagger-ui/)
