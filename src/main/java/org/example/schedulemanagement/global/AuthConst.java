@@ -7,7 +7,7 @@ import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 
 public abstract class AuthConst {
 
-    public static String LOGIN_USER = "loginUser";
+    public final static String LOGIN_USER = "loginUser";
 
     public static Long getUserId(HttpServletRequest request){
         SavedSessionDto savedSessionDto = (SavedSessionDto)request.getSession().getAttribute(LOGIN_USER);

@@ -31,7 +31,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         if (!isWhiteList(requestURI)) {
-            log.info(httpRequest.getMethod(), httpRequest.getRequestURI());
+            log.info("method : {}   Url{}", httpRequest.getMethod(), httpRequest.getRequestURI());
 
             try {
                 HttpSession session = httpRequest.getSession(false);

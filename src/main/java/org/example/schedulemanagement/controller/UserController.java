@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.schedulemanagement.dto.authdto.SavedSessionDto;
 import org.example.schedulemanagement.global.AuthConst;
 import org.example.schedulemanagement.dto.userdto.*;
 import org.example.schedulemanagement.service.IUserService;
@@ -74,9 +75,9 @@ public class UserController {
     @PutMapping
     public ResponseEntity<UserResponseDto> updateUser(
             @Valid @RequestBody UserUpdateRequestDto requestDto,
-            HttpServletRequest httpRequest
-    ) {
-        Long userId = AuthConst.getUserId(httpRequest);
+            @SessionAttribute(AuthConst.LOGIN_USER)SavedSessionDto dto //SessionAtrribute를 여기서 잘 사용하는게 맞는걸까?
+            ) {
+        Long userId = dto.getUserId();
         UserResponseDto responseDto = userService.updateUser(requestDto,userId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
